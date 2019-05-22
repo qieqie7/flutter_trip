@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
+const double APPBAR_SCROLL_OFFSET = 100;
+
 class HomePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _HomePageState();
@@ -13,28 +15,74 @@ class _HomePageState extends State<HomePage> {
     'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1558468700071&di=b6cbd6335ecd82e56f070e8155d4214d&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0100b057e915da0000018c1b3911be.jpg',
   ];
 
+  double appBarAlpha = 0;
+
+  _onScroll(offset) {
+    double alpha = offset / APPBAR_SCROLL_OFFSET;
+    if (alpha < 0) {
+      alpha = 0;
+    } else if (alpha > 1) {
+      alpha = 1;
+    }
+
+    setState(() {
+      appBarAlpha = alpha;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 160,
-              child: Swiper(
-                itemCount: _imageList.length,
-                autoplay: true,
-                itemBuilder: (BuildContext context, int index) {
-                  return Image.network(
-                    _imageList[index],
-                    fit: BoxFit.fill,
-                  );
-                },
-                pagination: SwiperPagination(),
+      body: Stack(
+        children: <Widget>[
+          MediaQuery.removePadding(
+            removeTop: true,
+            context: context,
+            child: NotificationListener(
+              onNotification: (ScrollNotification scrollNotification) {
+                if (scrollNotification.depth == 0) {
+                  // 过滤 防止 swiper 滚动干扰
+                  _onScroll(scrollNotification.metrics.pixels);
+                }
+              },
+              child: ListView(
+                children: <Widget>[
+                  Container(
+                    height: 160,
+                    child: Swiper(
+                      itemCount: _imageList.length,
+                      autoplay: true,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Image.network(
+                          _imageList[index],
+                          fit: BoxFit.fill,
+                        );
+                      },
+                      pagination: SwiperPagination(),
+                    ),
+                  ),
+                  Container(
+                    height: 800,
+                    child: Text('hahh'),
+                  )
+                ],
               ),
-            )
-          ],
-        ),
+            ),
+          ),
+          Opacity(
+            child: Container(
+              height: 80,
+              decoration: BoxDecoration(color: Colors.white),
+              child: Center(
+                child: Padding(
+                  child: Text('首页'),
+                  padding: EdgeInsets.only(top: 20),
+                ),
+              ),
+            ),
+            opacity: appBarAlpha,
+          )
+        ],
       ),
     );
   }
