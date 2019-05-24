@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:flutter_trip/DAO/home_dao.dart';
 
 const double APPBAR_SCROLL_OFFSET = 100;
 
@@ -14,8 +17,14 @@ class _HomePageState extends State<HomePage> {
     'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1558468700071&di=b3dc0c7ecd60a948209356de0514ca1b&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01ce8b582439aea84a0e282ba855d9.jpg',
     'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1558468700071&di=b6cbd6335ecd82e56f070e8155d4214d&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0100b057e915da0000018c1b3911be.jpg',
   ];
-
   double appBarAlpha = 0;
+  String resultString = '';
+
+  @override
+  initState() {
+    super.initState();
+    loadData();
+  }
 
   _onScroll(offset) {
     double alpha = offset / APPBAR_SCROLL_OFFSET;
@@ -27,6 +36,14 @@ class _HomePageState extends State<HomePage> {
 
     setState(() {
       appBarAlpha = alpha;
+    });
+  }
+
+  loadData() {
+    HomeDao.fetch().then((result) {
+      setState(() {
+        resultString = result.toString();
+      });
     });
   }
 
@@ -63,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Container(
                     height: 800,
-                    child: Text('hahh'),
+                    child: Text(resultString),
                   )
                 ],
               ),
@@ -75,7 +92,7 @@ class _HomePageState extends State<HomePage> {
               decoration: BoxDecoration(color: Colors.white),
               child: Center(
                 child: Padding(
-                  child: Text('首页'),
+                  child: Text(resultString),
                   padding: EdgeInsets.only(top: 20),
                 ),
               ),

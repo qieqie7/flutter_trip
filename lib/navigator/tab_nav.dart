@@ -4,12 +4,12 @@ import 'package:flutter_trip/pages/search_page.dart';
 import 'package:flutter_trip/pages/travel_page.dart';
 import 'package:flutter_trip/pages/my_page.dart';
 
-class TabNavigator extends StatefulWidget {
+class TabNav extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _TabNavigatorState();
+  State<StatefulWidget> createState() => _TabNavState();
 }
 
-class _TabNavigatorState extends State<TabNavigator> {
+class _TabNavState extends State<TabNav> {
   final _defaultColor = Colors.grey;
   final _activeColor = Colors.blue;
   int _currentIndex = 0;

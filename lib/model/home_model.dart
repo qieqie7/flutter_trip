@@ -21,15 +21,15 @@ class HomeModel {
   });
 
   factory HomeModel.fromJson(Map<String, dynamic> json) {
-    var localNavListJson = json['localNavlist'] as List;
+    var localNavListJson = json['localNavList'] as List;
     List<CommonModel> localNavList =
         localNavListJson.map((i) => CommonModel.fromJson(i)).toList();
 
-    var bannerListJson = json['bannerListJson'] as List;
+    var bannerListJson = json['bannerList'] as List;
     List<CommonModel> bannerList =
         bannerListJson.map((i) => CommonModel.fromJson(i)).toList();
 
-    var subNavListJson = json['subNavListJson'] as List;
+    var subNavListJson = json['subNavList'] as List;
     List<CommonModel> subNavList =
         subNavListJson.map((i) => CommonModel.fromJson(i)).toList();
 
