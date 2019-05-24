@@ -42,8 +42,12 @@ class _HomePageState extends State<HomePage> {
   loadData() {
     HomeDao.fetch().then((result) {
       setState(() {
-        resultString = result.toString();
+        resultString = json.encode(result);
       });
+    }).catchError((error) => {
+      setState(() {
+        resultString = 'error! ${error.toString()}';
+      })
     });
   }
 

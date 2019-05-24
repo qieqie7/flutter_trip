@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_trip/model/common_model.dart';
 import 'package:flutter_trip/model/config_model.dart';
 import 'package:flutter_trip/model/grid_nav_model.dart';
@@ -20,26 +22,37 @@ class HomeModel {
     this.salesBox,
   });
 
-  factory HomeModel.fromJson(Map<String, dynamic> json) {
-    var localNavListJson = json['localNavList'] as List;
+  factory HomeModel.fromJson(Map<String, dynamic> _json) {
+    var localNavListJson = _json['localNavList'] as List;
     List<CommonModel> localNavList =
-        localNavListJson.map((i) => CommonModel.fromJson(i)).toList();
+        localNavListJson ?? localNavListJson.map((i) => CommonModel.fromJson(i)).toList();
 
-    var bannerListJson = json['bannerList'] as List;
+    var bannerListJson = _json['bannerList'] as List;
     List<CommonModel> bannerList =
-        bannerListJson.map((i) => CommonModel.fromJson(i)).toList();
+        bannerListJson ?? bannerListJson.map((i) => CommonModel.fromJson(i)).toList();
 
-    var subNavListJson = json['subNavList'] as List;
+    var subNavListJson = _json['subNavList'] as List;
     List<CommonModel> subNavList =
-        subNavListJson.map((i) => CommonModel.fromJson(i)).toList();
+        subNavListJson ?? subNavListJson.map((i) => CommonModel.fromJson(i)).toList();
 
     return HomeModel(
-      config: ConfigModel.fromJson(json['config']),
+      config: _json['config'] ?? ConfigModel.fromJson(_json['config']),
       localNavList: localNavList,
       bannerList: bannerList,
       subNavList: subNavList,
-      gridNav: GridNavModel.fromJson(json['gridNav']),
-      salesBox: SalesBoxModel.fromJson(json['salesBox']),
+      gridNav: _json['gridNav'] ?? GridNavModel.fromJson(_json['gridNav']),
+      salesBox: _json['salesBox'] ?? SalesBoxModel.fromJson(_json['salesBox']),
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'config': json.encode(config),
+      'bannerList': bannerList.map((value) => json.encode(value)).toList(),
+      'localNavList': localNavList.map((value) => json.encode(value)).toList(),
+      'subNavList': subNavList.map((value) => json.encode(value)).toList(),
+      'gridNav': json.encode(gridNav),
+      'salesBox': json.encode(salesBox),
+    };
   }
 }

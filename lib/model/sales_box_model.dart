@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_trip/model/common_model.dart';
 
 /// 活动入口 model
@@ -33,5 +35,18 @@ class SalesBoxModel {
       smallCard3: CommonModel.fromJson(json['smallCard3']),
       smallCard4: CommonModel.fromJson(json['smallCard4']),
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'icon': icon,
+      'moreUrl': moreUrl,
+      'bigCard1': json.encode(bigCard1),
+      'bigCard2': json.encode(bigCard2),
+      'smallCard1': json.encode(smallCard1),
+      'smallCard2': json.encode(smallCard2),
+      'smallCard3': json.encode(smallCard3),
+      'smallCard4': json.encode(smallCard4),
+    };
   }
 }

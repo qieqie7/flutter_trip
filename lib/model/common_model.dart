@@ -11,7 +11,6 @@ class CommonModel {
     this.url,
     this.statusBarColor,
     this.hideAppBar,
-
   });
 
   factory CommonModel.fromJson(Map<String, dynamic> json) {
@@ -22,5 +21,15 @@ class CommonModel {
       statusBarColor: json['statusBarColor'],
       hideAppBar: json['hideAppBar'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "icon": icon,
+      "title": title,
+      "url": url,
+      "statusBarColor": statusBarColor,
+      "hideAppBar": hideAppBar,
+    };
   }
 }
