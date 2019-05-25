@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_trip/DAO/home_dao.dart';
+import 'package:flutter_trip/model/common_model.dart';
+import 'package:flutter_trip/widget/grid_nav.dart';
+import 'package:flutter_trip/widget/local_nav.dart';
 
 const double APPBAR_SCROLL_OFFSET = 100;
 
@@ -18,10 +21,11 @@ class _HomePageState extends State<HomePage> {
     'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1558468700071&di=b6cbd6335ecd82e56f070e8155d4214d&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0100b057e915da0000018c1b3911be.jpg',
   ];
   double appBarAlpha = 0;
-  String resultString = '';
+  List<CommonModel> localNavList = [];
 
   @override
   initState() {
+    print('HomePage init!');
     super.initState();
     loadData();
   }
@@ -40,20 +44,15 @@ class _HomePageState extends State<HomePage> {
   }
 
   loadData() {
-    HomeDao.fetch().then((result) {
-      setState(() {
-        resultString = json.encode(result);
-      });
-    }).catchError((error) => {
-      setState(() {
-        resultString = 'error! ${error.toString()}';
-      })
-    });
+    HomeDao.fetch().then((model) {
+      setState(() => localNavList = model.localNavList);
+    }).catchError((error) => print(error));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xfff2f2f2),
       body: Stack(
         children: <Widget>[
           MediaQuery.removePadding(
@@ -82,9 +81,15 @@ class _HomePageState extends State<HomePage> {
                       pagination: SwiperPagination(),
                     ),
                   ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 7, vertical: 4),
+                    child: LocalNav(
+                      localNavList: localNavList,
+                    ),
+                  ),
                   Container(
                     height: 800,
-                    child: Text(resultString),
+                    child: Text('123'),
                   )
                 ],
               ),
@@ -96,7 +101,7 @@ class _HomePageState extends State<HomePage> {
               decoration: BoxDecoration(color: Colors.white),
               child: Center(
                 child: Padding(
-                  child: Text(resultString),
+                  child: Text('首页'),
                   padding: EdgeInsets.only(top: 20),
                 ),
               ),
