@@ -39,7 +39,9 @@ class LocalNav extends StatelessWidget {
 
   Widget _item(BuildContext context, CommonModel model) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        
+      },
       child: Column(
         children: <Widget>[
           Image.network(

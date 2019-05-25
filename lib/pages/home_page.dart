@@ -1,10 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_trip/DAO/home_dao.dart';
 import 'package:flutter_trip/model/common_model.dart';
-import 'package:flutter_trip/widget/grid_nav.dart';
 import 'package:flutter_trip/widget/local_nav.dart';
 
 const double APPBAR_SCROLL_OFFSET = 100;
