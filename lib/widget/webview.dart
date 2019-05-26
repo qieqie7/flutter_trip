@@ -3,6 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
+const CATCH_URLS = [
+  'm.ctrip.com/',
+  'm.ctrip.com/html5/',
+  'm.ctrip.com/html5',
+];
+
 class WebView extends StatefulWidget {
   final String url;
   final String statusBarColor;
@@ -10,12 +16,13 @@ class WebView extends StatefulWidget {
   final bool hideAppBar;
   final bool backForbid;
 
-  WebView(
-      {this.url,
-      this.statusBarColor,
-      this.title,
-      this.hideAppBar,
-      this.backForbid});
+  WebView({
+    this.url,
+    this.statusBarColor,
+    this.title,
+    this.hideAppBar,
+    this.backForbid = false,
+  });
 
   @override
   State<StatefulWidget> createState() => _WebView();
@@ -26,6 +33,7 @@ class _WebView extends State<WebView> {
   StreamSubscription<String> _webViewUrlChange;
   StreamSubscription<WebViewStateChanged> _webViewStateChange;
   StreamSubscription<WebViewHttpError> _webViewHttpError;
+  bool exiting = false;
 
   @override
   void initState() {
@@ -38,6 +46,14 @@ class _WebView extends State<WebView> {
         webViewReference.onStateChanged.listen((WebViewStateChanged state) {
       switch (state.type) {
         case WebViewState.startLoad:
+          if (_isToMain(state.url) && !exiting) {
+            if (widget.backForbid) {
+              webViewReference.launch(widget.url);
+            } else {
+              Navigator.pop(context);
+              exiting = true;
+            }
+          }
           break;
         default:
       }
@@ -46,6 +62,8 @@ class _WebView extends State<WebView> {
     _webViewHttpError =
         webViewReference.onHttpError.listen((WebViewHttpError error) {
       print(error);
+      print(error.code);
+      print(error.url);
     });
   }
 
@@ -56,6 +74,17 @@ class _WebView extends State<WebView> {
     _webViewHttpError.cancel();
     webViewReference.dispose();
     super.dispose();
+  }
+
+  bool _isToMain(String url) {
+    bool contain = false;
+    for(final value in CATCH_URLS) {
+      if(url?.endsWith(value) ?? false) {
+        contain = true;
+        break;
+      }
+    }
+    return contain;
   }
 
   Widget _appBar(Color backgroundColor, Color backButtonColor) {
@@ -100,7 +129,7 @@ class _WebView extends State<WebView> {
   Widget build(BuildContext context) {
     String statusBarColorStr = widget.statusBarColor ?? 'ffffff';
     Color backButtonColor;
-    if(statusBarColorStr == 'ffffff') {
+    if (statusBarColorStr == 'ffffff') {
       backButtonColor = Colors.black;
     } else {
       backButtonColor = Colors.white;
