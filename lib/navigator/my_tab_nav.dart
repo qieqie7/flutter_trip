@@ -14,7 +14,6 @@ class _MyTabNav extends State<MyTabNav> {
   int _selectedIndex = 0;
 
   _setSeletedIndex(int index) {
-      // _pageController.jumpToPage(index);
     setState(() {
       _selectedIndex = index;
     });
