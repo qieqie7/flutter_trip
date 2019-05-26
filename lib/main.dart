@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_trip/navigator/tab_nav.dart';
 
+import 'navigator/my_tab_nav.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -8,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter Trip',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -21,7 +23,10 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: TabNav()
+      /// 跟着课程学习敲的代码
+      // home: TabNav(),
+      /// 自己回顾重写的代码
+      home: MyTabNav(),
     );
   }
 }
