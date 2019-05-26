@@ -20,3 +20,7 @@ samples, guidance on mobile development, and a full API reference.
 Dart 无法正确获得包内变量
 
 系统内存在两个 Dart SDK(Flutter 会自带一个 dart 环境), 需要在 vscode 中手动切换 Dart SDK 的路径.
+
+ListView 无法置顶展示
+
+padding 设置 0 或者使用  MediaQuery.removePadding 解决
