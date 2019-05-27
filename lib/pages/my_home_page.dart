@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:flutter_trip/DAO/home_dao.dart';
+import 'package:flutter_trip/model/common_model.dart';
+import 'package:flutter_trip/widget/my_local_nav.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -12,28 +15,50 @@ class _MyHomePage extends State<MyHomePage> {
     'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1558468700071&di=b3dc0c7ecd60a948209356de0514ca1b&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01ce8b582439aea84a0e282ba855d9.jpg',
     'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1558468700071&di=b6cbd6335ecd82e56f070e8155d4214d&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0100b057e915da0000018c1b3911be.jpg',
   ];
+  List<CommonModel> localNavList = [];
+
+  @override
+  void initState() {
+    print('home page init');
+    HomeDao.fetch().then((result) {
+      setState(() {
+        localNavList = result.localNavList;
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: EdgeInsets.zero,
-      children: <Widget>[
-        Container(
-          height: 160,
-          child: Swiper(
-            autoplay: true,
-            itemCount: _imageList.length,
-            itemBuilder: (BuildContext context, index) {
-              return Image.network(_imageList[index], fit: BoxFit.fill,);
-            },
-            pagination: SwiperPagination(),
+    return DecoratedBox(
+      decoration: BoxDecoration(color: Color(0xfff2f2f2)),
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          Container(
+            height: 160,
+            child: Swiper(
+              autoplay: true,
+              itemCount: _imageList.length,
+              itemBuilder: (BuildContext context, index) {
+                return Image.network(
+                  _imageList[index],
+                  fit: BoxFit.fill,
+                );
+              },
+              pagination: SwiperPagination(),
+            ),
           ),
-        ),
-        Container(
-          height: 800,
-          child: Text('剩下的部分'),
-        ),
-      ],
+          Padding(
+            padding: EdgeInsets.all(7),
+            child: MyLocalNav(localNavList: localNavList),
+          ),
+          Container(
+            height: 800,
+            child: Text('剩下的部分'),
+          ),
+        ],
+      ),
     );
   }
 }
