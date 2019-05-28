@@ -8,6 +8,7 @@ const HOME_URL = 'http://www.devio.org/io/flutter_app/json/home_page.json';
 /// 首页接口 
 class HomeDao {
   static Future<HomeModel> fetch() async {
+    print('HomeDao fetch');
     final response = await http.get(HOME_URL);
 
     if(response.statusCode == 200) {

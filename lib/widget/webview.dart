@@ -20,7 +20,7 @@ class WebView extends StatefulWidget {
     this.url,
     this.statusBarColor,
     this.title,
-    this.hideAppBar,
+    this.hideAppBar = false,
     this.backForbid = false,
   });
 
@@ -88,7 +88,7 @@ class _WebView extends State<WebView> {
   }
 
   Widget _appBar(Color backgroundColor, Color backButtonColor) {
-    if (widget.hideAppBar ?? false) {
+    if (widget.hideAppBar) {
       return Container(
         color: backgroundColor,
         height: 30,
