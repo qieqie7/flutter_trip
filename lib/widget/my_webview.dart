@@ -142,7 +142,7 @@ class _MyWebView extends State<MyWebView> {
                 color: _textColor,
               ),
               onPressed: () {
-                print('close');
+                Navigator.pop(context);
               },
             ),
           ),

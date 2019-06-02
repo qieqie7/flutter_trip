@@ -32,6 +32,19 @@ class GridNavModel {
   }
 }
 
+/// startColor 开始的颜色.
+/// 
+/// endColor 结束的颜色.
+/// 
+/// mainItem.
+/// 
+/// item1.
+/// 
+/// item2.
+/// 
+/// item3.
+/// 
+/// item4.
 class GridNavItemModel {
   final String startColor;
   final String endColor;
