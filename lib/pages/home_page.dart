@@ -3,8 +3,10 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_trip/DAO/home_dao.dart';
 import 'package:flutter_trip/model/common_model.dart';
 import 'package:flutter_trip/model/grid_nav_model.dart';
+import 'package:flutter_trip/model/sales_box_model.dart';
 import 'package:flutter_trip/widget/grid_nav.dart';
 import 'package:flutter_trip/widget/local_nav.dart';
+import 'package:flutter_trip/widget/sales_box.dart';
 import 'package:flutter_trip/widget/sub_nav.dart';
 
 const double APPBAR_SCROLL_OFFSET = 100;
@@ -24,6 +26,7 @@ class _HomePageState extends State<HomePage> {
   List<CommonModel> localNavList = [];
   GridNavModel gridNavModel;
   List<CommonModel> subNavList = [];
+  SalesBoxModel salesBox;
 
   @override
   initState() {
@@ -51,6 +54,7 @@ class _HomePageState extends State<HomePage> {
         localNavList = model.localNavList;
         gridNavModel = model.gridNav;
         subNavList = model.subNavList;
+        salesBox = model.salesBox;
       });
     }).catchError((error) => print(error));
   }
@@ -89,21 +93,19 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 7, vertical: 4),
-                    child: LocalNav(
-                      localNavList: localNavList,
-                    ),
+                    child: LocalNav(localNavList: localNavList),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 7, vertical: 4),
-                    child: GridNav(
-                      gridNavModel: gridNavModel,
-                    ),
+                    child: GridNav(gridNavModel: gridNavModel),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 7, vertical: 4),
-                    child: SubNav(
-                      subNavList: subNavList,
-                    ),
+                    child: SubNav(subNavList: subNavList),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 7, vertical: 4),
+                    child: SalesBox(salesBox: salesBox),
                   ),
                   Container(
                     height: 800,
