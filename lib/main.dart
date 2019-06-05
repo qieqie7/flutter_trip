@@ -23,9 +23,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       /// 跟着课程学习敲的代码
-      home: TabNav(),
+      // home: TabNav(),
       /// 自己回顾重写的代码
-      // home: MyTabNav(),
+      home: MyTabNav(),
     );
   }
 }
