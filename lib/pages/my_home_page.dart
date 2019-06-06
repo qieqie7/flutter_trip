@@ -4,9 +4,11 @@ import 'package:flutter_trip/DAO/home_dao.dart';
 import 'package:flutter_trip/model/common_model.dart';
 import 'package:flutter_trip/model/grid_nav_model.dart';
 import 'package:flutter_trip/model/home_model.dart';
+import 'package:flutter_trip/model/sales_box_model.dart';
 import 'package:flutter_trip/widget/my_grid_nav.dart';
 import 'package:flutter_trip/widget/my_loading_container.dart';
 import 'package:flutter_trip/widget/my_local_nav.dart';
+import 'package:flutter_trip/widget/my_salas_box.dart';
 
 const double MAX_SCROLL_PIXEL = 100;
 
@@ -22,6 +24,7 @@ class _MyHomePage extends State<MyHomePage> {
   List<CommonModel> bannerList = [];
   List<CommonModel> localNavList = [];
   GridNavModel gridNav;
+  SalesBoxModel salexbox;
 
   @override
   void initState() {
@@ -38,6 +41,7 @@ class _MyHomePage extends State<MyHomePage> {
         bannerList = result.bannerList;
         localNavList = result.localNavList;
         gridNav = result.gridNav;
+        salexbox = result.salesBox;
       });
     } catch (error) {
       setState(() => _isLoading = false);
@@ -47,8 +51,9 @@ class _MyHomePage extends State<MyHomePage> {
 
   _handleListScroll(double offset) {
     double opacity = offset / MAX_SCROLL_PIXEL;
-    if(opacity > 1) opacity = 1;
-    else if(opacity < 0) opacity = 0;
+    if (opacity > 1)
+      opacity = 1;
+    else if (opacity < 0) opacity = 0;
     setState(() {
       _opacity = opacity;
     });
@@ -66,10 +71,11 @@ class _MyHomePage extends State<MyHomePage> {
               onRefresh: _loadData,
               child: NotificationListener(
                 onNotification: (ScrollNotification notification) {
-                  if(notification.depth == 0) {
+                  if (notification.depth == 0) {
                     _handleListScroll(notification.metrics.pixels);
                   }
-                  return true; // 取消通知冒泡
+                  // return true; // 取消通知冒泡
+                  // 此处不能取消冒泡, RefreshIndicator 检测不到了, 无法下拉刷新了
                 },
                 child: ListView(
                   padding: EdgeInsets.zero,
@@ -97,6 +103,12 @@ class _MyHomePage extends State<MyHomePage> {
                       padding: EdgeInsets.all(7),
                       child: MyGridNav(
                         gridNav: gridNav,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(7),
+                      child: MySalasBox(
+                        salesBox: salexbox,
                       ),
                     ),
                     Container(
