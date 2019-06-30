@@ -9,10 +9,12 @@ import 'package:flutter_trip/widget/grid_nav.dart';
 import 'package:flutter_trip/widget/local_nav.dart';
 import 'package:flutter_trip/widget/loding_container.dart';
 import 'package:flutter_trip/widget/sales_box.dart';
+import 'package:flutter_trip/widget/search_bar.dart';
 import 'package:flutter_trip/widget/sub_nav.dart';
 import 'package:flutter_trip/widget/webview.dart';
 
 const double APPBAR_SCROLL_OFFSET = 100;
+const String SEARCH_BAR_DEFAULT_TEXT = '网红打卡地 景点 酒店 美食';
 
 class HomePage extends StatefulWidget {
   @override
@@ -66,6 +68,43 @@ class _HomePageState extends State<HomePage> {
       });
     }
     return null;
+  }
+
+  Widget get _appBar {
+    return Column(
+      children: <Widget>[
+        Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0x66000000), Colors.transparent],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+          child: Container(
+            height: 80,
+            decoration: BoxDecoration(
+              color: Color.fromARGB((appBarAlpha * 255).toInt(), 255, 255, 255),
+            ),
+            child: SearchBar(
+              searchBarType: appBarAlpha > 0.2
+                  ? SearchBarType.homeLight
+                  : SearchBarType.home,
+              inputBoxClick: _jumpToSearch,
+              speakClick: _jumpToSpeak,
+              defaultText: SEARCH_BAR_DEFAULT_TEXT,
+              leftButtonClick: () {},
+            ),
+          ),
+        ),
+        Container(
+          height: appBarAlpha > 0.2 ? 0.5 : 0,
+          decoration: BoxDecoration(
+            boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 0.5)]
+          ),
+        ),
+      ],
+    );
   }
 
   @override
@@ -145,22 +184,14 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            Opacity(
-              child: Container(
-                height: 80,
-                decoration: BoxDecoration(color: Colors.white),
-                child: Center(
-                  child: Padding(
-                    child: Text('首页'),
-                    padding: EdgeInsets.only(top: 20),
-                  ),
-                ),
-              ),
-              opacity: appBarAlpha,
-            )
+            _appBar,
           ],
         ),
       ),
     );
   }
+
+  _jumpToSearch() {}
+
+  _jumpToSpeak() {}
 }
