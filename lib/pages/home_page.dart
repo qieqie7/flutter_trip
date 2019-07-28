@@ -82,6 +82,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           child: Container(
+            padding: EdgeInsets.only(top: 30),
             height: 80,
             decoration: BoxDecoration(
               color: Color.fromARGB((appBarAlpha * 255).toInt(), 255, 255, 255),

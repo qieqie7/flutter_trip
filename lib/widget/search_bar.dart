@@ -127,13 +127,12 @@ class _SearchBarState extends State<SearchBar> {
           // 右侧Icon
           _wrapTap(
             Container(
-              padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-              child: Icon(
-                Icons.comment,
-                color: _homeFontColor(),
-                size: 26,
-              )
-            ),
+                padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                child: Icon(
+                  Icons.comment,
+                  color: _homeFontColor(),
+                  size: 26,
+                )),
             widget.rightButtonClick,
           ),
         ],
@@ -231,14 +230,19 @@ class _SearchBarState extends State<SearchBar> {
   }
 
   void _onChanged(String text) {
-    if (text.length > 0 && !showClear) {
+    if (text.length > 0) {
       setState(() => showClear = true);
-    } else if (text.length == 0 && showClear) {
+    } else {
       setState(() => showClear = false);
+    }
+    if (widget.onChanged != null) {
+      widget.onChanged(text);
     }
   }
 
   Color _homeFontColor() {
-    // return widget.searchBarType
+    return widget.searchBarType == SearchBarType.homeLight
+        ? Colors.black54
+        : Colors.white;
   }
 }
