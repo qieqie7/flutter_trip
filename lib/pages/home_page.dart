@@ -5,6 +5,7 @@ import 'package:flutter_trip/model/common_model.dart';
 import 'package:flutter_trip/model/grid_nav_model.dart';
 import 'package:flutter_trip/model/home_model.dart';
 import 'package:flutter_trip/model/sales_box_model.dart';
+import 'package:flutter_trip/pages/search_page.dart';
 import 'package:flutter_trip/widget/grid_nav.dart';
 import 'package:flutter_trip/widget/local_nav.dart';
 import 'package:flutter_trip/widget/loding_container.dart';
@@ -101,8 +102,7 @@ class _HomePageState extends State<HomePage> {
         Container(
           height: appBarAlpha > 0.2 ? 0.5 : 0,
           decoration: BoxDecoration(
-            boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 0.5)]
-          ),
+              boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 0.5)]),
         ),
       ],
     );
@@ -142,8 +142,8 @@ class _HomePageState extends State<HomePage> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => WebView(
-                                          url: bannerList[index].url,
-                                        ),
+                                      url: bannerList[index].url,
+                                    ),
                                   ),
                                 );
                               },
@@ -192,7 +192,16 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _jumpToSearch() {}
+  _jumpToSearch() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SearchPage(hint: SEARCH_BAR_DEFAULT_TEXT),
+      ),
+    );
+  }
 
-  _jumpToSpeak() {}
+  _jumpToSpeak() {
+    // Navigator.push(context, MaterialPageRoute(builder: (context) => SpeakPage()))
+  }
 }
